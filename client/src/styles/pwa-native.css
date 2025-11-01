@@ -1,0 +1,349 @@
+/**
+ * PWA NATIVE STYLES
+ * Makes your app feel like a native mobile app
+ * Include this in your index.css or import in App.tsx
+ */
+
+@layer base {
+  /* ============================================
+     REMOVE WEB BEHAVIORS - MAKE IT FEEL NATIVE
+     ============================================ */
+  
+  * {
+    /* Remove tap highlight (makes it feel like a website) */
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Prevent text selection except in inputs */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    
+    /* Smooth fonts like native apps */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Remove default outline */
+    outline: none;
+  }
+
+  /* Allow text selection where needed */
+  input,
+  textarea,
+  [contenteditable="true"] {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+  }
+
+  /* ============================================
+     SAFE AREA HANDLING (iPhone notch, etc.)
+     ============================================ */
+  
+  :root {
+    /* Safe area insets for notched devices */
+    --sat: env(safe-area-inset-top);
+    --sar: env(safe-area-inset-right);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
+  }
+
+  /* ============================================
+     PREVENT UNWANTED MOBILE BEHAVIORS
+     ============================================ */
+  
+  html,
+  body {
+    /* Prevent pull-to-refresh */
+    overscroll-behavior-y: contain;
+    
+    /* Prevent bounce scroll on iOS */
+    -webkit-overflow-scrolling: touch;
+    
+    /* Prevent horizontal scroll */
+    overflow-x: hidden;
+    
+    /* Full height */
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    
+    /* Prevent zoom on iOS when focusing inputs */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  #root {
+    height: 100%;
+    overflow: auto;
+  }
+
+  /* ============================================
+     PREVENT ZOOM ON INPUT FOCUS (iOS)
+     ============================================ */
+  
+  input,
+  select,
+  textarea {
+    /* iOS zooms if font-size < 16px */
+    font-size: max(16px, 1rem);
+  }
+
+  /* ============================================
+     TOUCH OPTIMIZATIONS
+     ============================================ */
+  
+  button,
+  a,
+  [role="button"],
+  [role="tab"],
+  [role="link"] {
+    /* Fast tap response */
+    touch-action: manipulation;
+    
+    /* Cursor for desktop */
+    cursor: pointer;
+    
+    /* Minimum tap target size (44x44px per Apple HIG) */
+    min-height: 44px;
+    min-width: 44px;
+    
+    /* Smooth transitions */
+    transition: transform 0.1s ease, opacity 0.1s ease;
+  }
+
+  /* Active state feedback (native-like) */
+  button:active,
+  a:active,
+  [role="button"]:active {
+    transform: scale(0.97);
+    opacity: 0.7;
+  }
+
+  /* ============================================
+     NATIVE-STYLE SCROLLING
+     ============================================ */
+  
+  .scrollable,
+  .overflow-y-auto,
+  .overflow-auto {
+    /* Smooth momentum scrolling */
+    -webkit-overflow-scrolling: touch;
+    
+    /* Hide scrollbar (native apps don't show it) */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollable::-webkit-scrollbar,
+  .overflow-y-auto::-webkit-scrollbar,
+  .overflow-auto::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ============================================
+     SAFE AREA UTILITIES FOR TAILWIND
+     ============================================ */
+  
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .pl-safe {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .pr-safe {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .mt-safe {
+    margin-top: env(safe-area-inset-top);
+  }
+
+  .mb-safe {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@layer utilities {
+  /* ============================================
+     NATIVE APP UTILITIES
+     ============================================ */
+  
+  /* Card with native app styling */
+  .native-card {
+    @apply bg-gray-800 rounded-xl shadow-lg;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Native button styles */
+  .native-button {
+    @apply px-6 py-3 rounded-xl font-semibold;
+    @apply transition-all duration-200;
+    @apply active:scale-95;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .native-button-primary {
+    @apply native-button bg-blue-600 text-white;
+    @apply active:bg-blue-700;
+  }
+
+  .native-button-secondary {
+    @apply native-button bg-gray-700 text-white;
+    @apply active:bg-gray-800;
+  }
+
+  /* Bottom navigation safe area */
+  .bottom-nav-safe {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+  }
+
+  /* Header safe area */
+  .header-safe {
+    padding-top: calc(env(safe-area-inset-top) + 1rem);
+  }
+
+  /* Prevent layout shift during load */
+  .prevent-shift {
+    contain: layout style paint;
+  }
+
+  /* Native-style shadow */
+  .native-shadow {
+    box-shadow: 
+      0 1px 3px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px 0 rgba(0, 0, 0, 0.06),
+      0 0 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Skeleton loading animation */
+  .skeleton {
+    @apply bg-gray-700 animate-pulse rounded;
+    background: linear-gradient(
+      90deg,
+      rgba(31, 41, 55, 1) 0%,
+      rgba(55, 65, 81, 1) 50%,
+      rgba(31, 41, 55, 1) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(31, 41, 55, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Native-style divider */
+  .native-divider {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+  }
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   Matches common device sizes
+   ============================================ */
+
+/* Small phones: 320px - 374px */
+@media (max-width: 374px) {
+  .text-responsive {
+    font-size: 0.875rem;
+  }
+}
+
+/* Standard phones: 375px - 413px (iPhone 12/13/14) */
+@media (min-width: 375px) and (max-width: 413px) {
+  /* Standard sizing */
+}
+
+/* Large phones: 414px - 767px (iPhone Pro Max, etc.) */
+@media (min-width: 414px) and (max-width: 767px) {
+  /* Slightly larger sizing */
+}
+
+/* Tablets: 768px - 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container-responsive {
+    max-width: 768px;
+    margin: 0 auto;
+  }
+}
+
+/* Desktop: 1024px+ */
+@media (min-width: 1024px) {
+  .container-responsive {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* ============================================
+   DARK MODE (Already using dark, but good to have)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* ============================================
+   REDUCE MOTION (Accessibility)
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   PWA DISPLAY MODE DETECTION
+   ============================================ */
+
+/* Styles when app is installed (standalone mode) */
+@media (display-mode: standalone) {
+  body {
+    /* Add any PWA-specific styles */
+    /* Example: Hide "Install App" banner */
+    --pwa-installed: true;
+  }
+}
+
+/* Styles when app is in browser */
+@media (display-mode: browser) {
+  body {
+    /* Add any browser-specific styles */
+    --pwa-installed: false;
+  }
+}
